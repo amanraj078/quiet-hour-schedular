@@ -8,7 +8,16 @@ export default function Dashboard() {
     const supabase = createClient();
     const router = useRouter();
 
-    const [blocks, setBlocks] = useState<any[]>([]);
+    interface StudyBlock {
+    id: string;
+    user_id: string;
+    start_time: string;
+    end_time: string;
+    notified: boolean;
+    created_at?: string;
+}
+
+const [blocks, setBlocks] = useState<StudyBlock[]>([]);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [loading, setLoading] = useState(false);

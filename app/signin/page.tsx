@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
+import type { AuthError } from "@supabase/supabase-js";
 
 export default function SignInPage() {
     const [email, setEmail] = useState("");
@@ -61,8 +62,12 @@ export default function SignInPage() {
                 if (error) throw error;
                 router.push("/dashboard");
             }
-        } catch (error: any) {
-            setError(error.message);
+        } catch (error: AuthError | Error | unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unknown error occurred');
+            }
         } finally {
             setIsLoading(false);
         }
